@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seis meses · Un hogar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   PALETA Y BASE
+   ============================================================ */
+:root{
+  --night:#060812;
+  --night-2:#0a0e1f;
+  --gold:#e6c66a;
+  --gold-2:#c9a24a;
+  --gold-soft:rgba(230,198,106,.35);
+  --parchment:#f4e7c8;
+  --parchment-2:#e6d2a6;
+  --burgundy:#7a1f2b;
+  --emerald:#1f5c3d;
+  --text:#e9e2cf;
+  --muted:rgba(233,226,207,.68);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:'Cormorant Garamond',Georgia,serif;
+  background:var(--night);
+  color:var(--text);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:"";
+  position:fixed; inset:0; z-index:-3;
+  background:
+    radial-gradient(1200px 800px at 12% -5%, rgba(70,45,130,.55), transparent 62%),
+    radial-gradient(1000px 700px at 92% 15%, rgba(20,70,90,.35), transparent 60%),
+    radial-gradient(900px 900px at 50% 115%, rgba(110,45,55,.28), transparent 62%),
+    linear-gradient(180deg,#080b1a 0%,#05060e 55%,#08060c 100%);
+}
+body::after{
+  content:"";
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(55% 45% at 50% 45%, rgba(255,222,150,.14), transparent 72%);
+  opacity:0; transition:opacity .9s ease;
+}
+body.lumos::after{opacity:1}
+#sky{position:fixed; inset:0; z-index:-2; pointer-events:none}
+.vignette{
+  position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background:radial-gradient(120% 100% at 50% 50%, transparent 45%, rgba(0,0,0,.55) 100%);
+}
+::selection{background:rgba(230,198,106,.35); color:#fff}
+
+/* ============================================================
+   TIPOGRAFÍA
+   ============================================================ */
+h1,h2,h3{font-family:'Cinzel',Georgia,serif; font-weight:700; margin:0; color:var(--gold); letter-spacing:.05em}
+h1{font-size:clamp(2rem,5vw,3.6rem); line-height:1.08; text-shadow:0 0 30px rgba(230,198,106,.25)}
+h2{font-size:clamp(1.5rem,3.4vw,2.4rem); line-height:1.15}
+h3{font-size:clamp(1.05rem,2vw,1.35rem)}
+p{margin:0}
+.eyebrow{
+  font-family:'Cinzel',serif; font-size:.68rem; letter-spacing:.38em;
+  text-transform:uppercase; color:rgba(230,198,106,.72);
+}
+.lead{font-size:clamp(1rem,1.6vw,1.18rem); line-height:1.6; color:var(--muted); max-width:62ch; text-align:center}
+.script{font-family:'Great Vibes',cursive; color:#bfe9ff; font-size:clamp(2.2rem,6vw,4.2rem); text-shadow:0 0 30px rgba(150,215,255,.55)}
+
+/* ============================================================
+   BARRA SUPERIOR Y NAVEGACIÓN
+   ============================================================ */
+.topbar{
+  position:relative; z-index:6; display:flex; align-items:center; gap:1rem;
+  padding:.65rem 1.1rem; border-bottom:1px solid rgba(230,198,106,.16);
+  background:linear-gradient(180deg, rgba(5,7,16,.9), rgba(5,7,16,.35));
+  backdrop-filter:blur(8px);
+}
+.brand{
+  font-family:'Cinzel',serif; font-size:.86rem; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--gold); white-space:nowrap;
+  display:flex; align-items:center; gap:.5rem;
+}
+.brand .mark{font-size:1rem; animation:twinkle 3s ease-in-out infinite}
+.chapters{display:flex; gap:.15rem; overflow-x:auto; flex:1; scrollbar-width:none}
+.chapters::-webkit-scrollbar{display:none}
+.chapters button{
+  background:none; border:0; color:rgba(233,226,207,.55); cursor:pointer;
+  font-family:'Cinzel',serif; font-size:.66rem; letter-spacing:.12em;
+  text-transform:uppercase; padding:.42rem .55rem; border-radius:7px;
+  white-space:nowrap; transition:color .25s, background .25s, box-shadow .25s;
+}
+.chapters button:hover{color:var(--gold); background:rgba(230,198,106,.08)}
+.chapters button.active{color:var(--gold); background:rgba(230,198,106,.12); box-shadow:inset 0 -2px 0 var(--gold)}
+.lumos{
+  flex:0 0 auto; cursor:pointer; font-family:'Cinzel',serif; font-size:.66rem;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--gold);
+  background:rgba(230,198,106,.07); border:1px solid rgba(230,198,106,.35);
+  padding:.45rem .8rem; border-radius:999px; transition:.25s;
+}
+.lumos:hover{background:rgba(230,198,106,.18); box-shadow:0 0 18px rgba(230,198,106,.25)}
+.music-toggle{font-family:Georgia,serif; font-size:1.15rem; line-height:1; padding:.38rem .62rem}
+.music-toggle[aria-pressed="true"]{background:rgba(230,198,106,.2); box-shadow:0 0 16px rgba(230,198,106,.22)}
+.music-status{
+  position:absolute; top:calc(100% + .35rem); right:.8rem; z-index:8;
+  max-width:min(360px,calc(100vw - 1.6rem)); padding:.55rem .8rem;
+  border:1px solid rgba(230,198,106,.35); border-radius:8px;
+  background:rgba(5,7,16,.96); color:var(--text); font-size:.9rem;
+  box-shadow:0 8px 24px rgba(0,0,0,.4);
+}
+.music-status[hidden]{display:none}
+
+/* ============================================================
+   ESCENAS
+   ============================================================ */
+#stage{position:relative; flex:1; min-height:0; z-index:1}
+.scene{
+  position:absolute; inset:0; display:flex; justify-content:center; align-items:flex-start;
+  padding:clamp(.9rem,2.4vw,2rem); overflow-y:auto;
+  opacity:0; visibility:hidden; pointer-events:none;
+  transform:translateY(16px) scale(.995);
+  transition:opacity .55s ease, transform .55s ease, visibility .55s;
+}
+.scene.active{opacity:1; visibility:visible; pointer-events:auto; transform:none}
+.scene::-webkit-scrollbar{width:8px}
+.scene::-webkit-scrollbar-thumb{background:rgba(230,198,106,.22); border-radius:8px}
+.scene::-webkit-scrollbar-track{background:transparent}
+.wrap{
+  width:100%; max-width:1080px; margin:auto;
+  display:flex; flex-direction:column; align-items:center; gap:1.15rem;
+  padding-bottom:1rem;
+}
+.center{text-align:center}
+.navbar{
+  position:relative; z-index:6; display:flex; align-items:center; justify-content:center;
+  gap:1.1rem; padding:.7rem; border-top:1px solid rgba(230,198,106,.14);
+  background:linear-gradient(0deg, rgba(5,7,16,.92), rgba(5,7,16,.3));
+  backdrop-filter:blur(8px);
+}
+.arrow{
+  width:44px; height:44px; border-radius:50%; cursor:pointer;
+  border:1px solid rgba(230,198,106,.35); background:rgba(230,198,106,.06);
+  color:var(--gold); font-size:1.15rem; display:grid; place-items:center;
+  transition:transform .25s, background .25s, box-shadow .25s;
+}
+.arrow:hover{background:rgba(230,198,106,.18); transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.arrow:disabled{opacity:.22; cursor:default; transform:none; box-shadow:none}
+.dots{display:flex; gap:.5rem; align-items:center}
+.dots button{
+  width:9px; height:9px; padding:0; border-radius:50%; cursor:pointer;
+  border:1px solid rgba(230,198,106,.5); background:transparent; transition:.3s;
+}
+.dots button.active{background:var(--gold); transform:scale(1.3); box-shadow:0 0 12px rgba(230,198,106,.8)}
+.hint{font-size:.8rem; letter-spacing:.18em; text-transform:uppercase; color:rgba(233,226,207,.45); font-family:'Cinzel',serif}
+
+/* Botones genéricos */
+.btn{
+  cursor:pointer; font-family:'Cinzel',serif; font-size:.74rem; letter-spacing:.16em;
+  text-transform:uppercase; color:#1b1206; background:linear-gradient(160deg,#f2d98f,#c9a24a);
+  border:0; border-radius:999px; padding:.8rem 1.5rem; font-weight:700;
+  box-shadow:0 10px 26px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.5);
+  transition:transform .2s, box-shadow .2s, filter .2s;
+}
+.btn:hover{transform:translateY(-2px); filter:brightness(1.06); box-shadow:0 14px 32px rgba(0,0,0,.5)}
+.btn.ghost{
+  background:rgba(230,198,106,.06); color:var(--gold); border:1px solid rgba(230,198,106,.4);
+  box-shadow:none; font-weight:500;
+}
+.btn.ghost:hover{background:rgba(230,198,106,.14)}
+
+/* Papel pergamino */
+.paper{
+  position:relative; color:#3a2b16; border-radius:12px;
+  background:
+    radial-gradient(120% 90% at 18% 8%, #fcf4de 0%, #f2e4c3 42%, #e3cfa2 100%);
+  box-shadow:0 26px 70px rgba(0,0,0,.55), inset 0 0 0 1px rgba(120,90,40,.35),
+             inset 0 0 70px rgba(150,110,50,.18);
+  padding:clamp(1.3rem,3vw,2.3rem);
+}
+.paper::before{
+  content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  opacity:.45; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+}
+.paper > *{position:relative; z-index:1}
+@keyframes twinkle{0%,100%{opacity:.5; transform:scale(.9)}50%{opacity:1; transform:scale(1.15)}}
+@keyframes blink{50%{opacity:0}}
+@keyframes pop{0%{opacity:0; transform:scale(.8)}100%{opacity:1; transform:scale(1)}}
+/* ============================================================
+   PORTADA · SOBRE
+   ============================================================ */
+.cover .wrap{gap:1.05rem; justify-content:center; text-align:center}
+.cover h1{font-size:clamp(2.1rem,6vw,4.2rem)}
+.cover .lead{max-width:46ch}
+.envelope{
+  position:relative; width:min(360px,82vw); aspect-ratio:1.55/1;
+  cursor:pointer; margin-top:.4rem;
+  filter:drop-shadow(0 30px 45px rgba(0,0,0,.55));
+  transition:transform .3s;
+}
+.envelope:hover{transform:translateY(-4px)}
+.envelope:focus-visible{outline:2px solid var(--gold); outline-offset:8px; border-radius:10px}
+.env-base{
+  position:absolute; inset:0; border-radius:9px;
+  background:linear-gradient(160deg,#f7ecd2,#e2cda0);
+  box-shadow:inset 0 0 0 1px rgba(120,90,40,.4), inset 0 -30px 60px rgba(120,85,35,.18);
+}
+.env-letter{
+  position:absolute; left:8%; right:8%; top:13%; height:74%;
+  background:linear-gradient(180deg,#fffdf6,#f4e9cf); border-radius:4px;
+  box-shadow:0 8px 22px rgba(0,0,0,.25);
+  z-index:1; transition:transform .9s cubic-bezier(.2,.8,.2,1) .25s;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.35rem;
+  color:#8a6a33; font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.28em; text-transform:uppercase;
+}
+.env-letter .wax-mini{width:34px; height:34px; border-radius:50%; background:radial-gradient(circle at 35% 30%,#a02a3a,#5e0f1c); box-shadow:inset 0 0 0 1px rgba(255,220,150,.35)}
+.envelope.open .env-letter{transform:translateY(-56%)}
+.env-front{
+  position:absolute; inset:0; z-index:2; border-radius:9px;
+  background:linear-gradient(160deg,#efdfbb,#d8bd88);
+  clip-path:polygon(0 38%, 50% 67%, 100% 38%, 100% 100%, 0 100%);
+  box-shadow:inset 0 0 0 1px rgba(120,90,40,.25);
+}
+.env-front::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg, transparent 60%, rgba(120,85,35,.12));
+}
+.env-flap{
+  position:absolute; left:0; top:0; width:100%; height:42%; z-index:3;
+  background:linear-gradient(180deg,#f4e6c4,#dcc08c);
+  clip-path:polygon(0 0, 100% 0, 50% 100%);
+  transform-origin:top center;
+  transition:transform .85s cubic-bezier(.2,.8,.2,1);
+  border-radius:9px 9px 0 0;
+}
+.envelope.open .env-flap{transform:rotateX(-168deg)}
+.seal{
+  position:absolute; left:50%; top:40%; width:78px; height:78px; z-index:4;
+  transform:translate(-50%,-50%); border-radius:50%;
+  background:radial-gradient(circle at 35% 28%, #b3374a, #7a1f2b 55%, #4c0b16);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  color:#f4d98f; font-family:'Cinzel',serif; line-height:1;
+  box-shadow:0 8px 18px rgba(0,0,0,.45), inset 0 0 0 2px rgba(255,220,150,.25),
+             inset 0 -6px 14px rgba(0,0,0,.35);
+  transition:opacity .35s, transform .35s;
+}
+.seal .num{font-size:1.7rem; font-weight:900; text-shadow:0 1px 0 rgba(0,0,0,.4)}
+.seal .word{font-size:.44rem; letter-spacing:.3em; text-transform:uppercase; margin-top:3px; opacity:.85}
+.seal::before{
+  content:""; position:absolute; inset:7px; border-radius:50%;
+  border:1px solid rgba(255,220,150,.28);
+}
+.envelope.open .seal{opacity:0; transform:translate(-50%,-50%) scale(.55)}
+
+/* ============================================================
+   CARTA
+   ============================================================ */
+.letter-card{max-width:720px; width:100%; transform:rotate(-.4deg)}
+.letter-card .paper{padding:clamp(1.6rem,4vw,2.8rem) clamp(1.3rem,4vw,2.8rem); min-height:440px; display:flex; flex-direction:column}
+.letter-head{
+  display:flex; align-items:center; justify-content:center; gap:.8rem;
+  font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.34em; text-transform:uppercase;
+  color:#7a5a2a; padding-bottom:.9rem; border-bottom:1px solid rgba(122,90,42,.28);
+}
+.letter-head .line{flex:1; height:1px; background:linear-gradient(90deg,transparent,rgba(122,90,42,.4),transparent)}
+.letter-text{
+  font-family:'Cormorant Garamond',Georgia,serif; font-size:clamp(1.02rem,1.7vw,1.2rem);
+  line-height:1.8; white-space:pre-line; color:#33240f; margin:1.2rem 0 .6rem;
+  min-height:240px; flex:1;
+}
+.letter-text::after{content:"▌"; color:#7a5a2a; animation:blink 1s steps(1) infinite; margin-left:2px}
+.letter-text.done::after{display:none}
+.signature{font-family:'Great Vibes',cursive; font-size:clamp(1.8rem,4vw,2.6rem); color:#6b1f2b; text-align:right; margin-top:.4rem}
+.letter-actions{display:flex; gap:.7rem; justify-content:center; flex-wrap:wrap; margin-top:1rem}
+
+/* ============================================================
+   SOMBRERO SELECCIONADOR
+   ============================================================ */
+.hat-stage{display:flex; flex-direction:column; align-items:center; gap:1rem}
+.hat-button{padding:0; border:0; background:none; cursor:pointer; line-height:0}
+.hat-button:focus-visible{outline:2px solid var(--gold); outline-offset:6px; border-radius:12px}
+.hat{
+  width:clamp(150px,20vw,200px); height:auto; cursor:pointer;
+  filter:drop-shadow(0 24px 34px rgba(0,0,0,.6));
+  transition:transform .3s;
+}
+.hat:hover{transform:translateY(-5px) rotate(-1.2deg)}
+.hat-button.thinking .hat{animation:hatShake .38s ease-in-out 5}
+@keyframes hatShake{
+  0%,100%{transform:rotate(0)}
+  25%{transform:rotate(-4deg) translateY(-3px)}
+  75%{transform:rotate(4deg) translateY(-3px)}
+}
+.quiz-panel{width:100%; max-width:820px}
+.quiz-form{display:flex; flex-direction:column; gap:1rem}
+.quiz-questions{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.8rem}
+.quiz-question{
+  min-width:0; margin:0; padding:1rem; border:1px solid rgba(122,90,42,.28);
+  border-radius:10px; background:rgba(255,255,255,.2);
+}
+.quiz-question legend{padding:0 .35rem; font-family:'Cinzel',serif; font-size:.78rem; line-height:1.45; color:#5e3d16}
+.quiz-option{
+  display:flex; align-items:flex-start; gap:.55rem; margin-top:.55rem; padding:.45rem .55rem;
+  border:1px solid transparent; border-radius:7px; color:#3a2b16; font-size:.98rem;
+  line-height:1.35; cursor:pointer; transition:background .2s, border-color .2s;
+}
+.quiz-option:hover{background:rgba(122,90,43,.08)}
+.quiz-option:has(input:checked){background:rgba(122,90,43,.12); border-color:rgba(122,90,43,.35)}
+.quiz-option input{flex:0 0 auto; margin:.22rem 0 0; accent-color:#7a1f2b}
+.quiz-option:focus-within{outline:2px solid #8a6a33; outline-offset:2px}
+.quiz-feedback{min-height:1.3em; color:#7a1f2b; font-size:.95rem}
+.quiz-actions{display:flex; justify-content:center; gap:.7rem; flex-wrap:wrap}
+.quiz-result{
+  margin-top:.9rem; padding:.9rem 1rem; border:1px solid rgba(122,90,42,.3);
+  border-radius:9px; background:rgba(255,255,255,.27); text-align:center;
+  color:#3a2b16; font-size:1.08rem; line-height:1.5;
+}
+.quiz-result strong{font-family:'Cinzel',serif; color:#6b1f2b}
+.bubble{
+  max-width:560px; padding:1rem 1.4rem; border-radius:16px;
+  background:rgba(244,231,200,.97); color:#33240f; font-size:1.08rem; line-height:1.5;
+  text-align:center; box-shadow:0 18px 40px rgba(0,0,0,.45);
+  opacity:0; transform:translateY(10px); transition:opacity .5s, transform .5s;
+  position:relative;
+}
+.bubble::before{
+  content:""; position:absolute; top:-9px; left:50%; transform:translateX(-50%) rotate(45deg);
+  width:18px; height:18px; background:rgba(244,231,200,.97);
+}
+.bubble.show{opacity:1; transform:none}
+.crest{display:none}
+.crest.show{display:block; animation:crestIn .7s ease both}
+@keyframes crestIn{from{opacity:0; transform:scale(.9)} to{opacity:1; transform:none}}
+.crest svg{width:clamp(120px,16vw,155px); height:auto; filter:drop-shadow(0 14px 26px rgba(0,0,0,.5))}
+.crest-icon{font-family:'Cinzel',Georgia,serif; font-weight:900; fill:#f4e7c8}
+.crest-name{font-family:'Cinzel',Georgia,serif; font-weight:700; fill:#f4e7c8}
+.crest-trait{font-family:'Cinzel',Georgia,serif; letter-spacing:1px; fill:#e6c66a}
+/* ============================================================
+   MAPA DEL MERODEADOR
+   ============================================================ */
+.map-panel{width:100%; max-width:1000px}
+.map-illustration{
+  display:block; width:min(230px,70%); height:auto; margin:1.2rem auto 0;
+  border:1px solid rgba(122,90,42,.35); border-radius:8px;
+  box-shadow:0 12px 28px rgba(58,43,22,.3);
+}
+.map-top{display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; flex-wrap:wrap}
+.map-count{font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:#7a5a2a}
+.trail{
+  position:relative; display:flex; justify-content:space-between; gap:.4rem;
+  margin-top:1.8rem; padding:1.2rem .2rem 0;
+}
+.trail::before{
+  content:""; position:absolute; left:5%; right:5%; top:44px;
+  border-top:3px dashed rgba(122,31,43,.32);
+}
+.stop{
+  position:relative; z-index:1; flex:1; min-width:0; background:none; border:0; cursor:pointer;
+  display:flex; flex-direction:column; align-items:center; gap:.55rem;
+  color:#4a3418; font-family:'Cinzel',serif; padding:0;
+}
+.stop .dot{
+  width:54px; height:54px; border-radius:50%; display:grid; place-items:center;
+  font-size:1.05rem; font-weight:700; color:#7a1f2b;
+  background:#f9efd7; border:2px solid rgba(122,31,43,.45);
+  box-shadow:0 6px 14px rgba(0,0,0,.18);
+  transition:transform .3s, background .3s, color .3s, box-shadow .3s, border-color .3s;
+}
+.stop:hover .dot{transform:translateY(-5px) scale(1.06); border-color:#7a1f2b}
+.stop .label{font-size:.58rem; letter-spacing:.12em; text-transform:uppercase; opacity:.75; text-align:center; line-height:1.35}
+.stop.visited .dot{
+  background:linear-gradient(160deg,#8e2635,#5e0f1c); color:#f4d98f; border-color:#c9a24a;
+  box-shadow:0 0 20px rgba(201,162,74,.55), inset 0 0 0 2px rgba(255,220,150,.2);
+}
+.stop.visited .label{opacity:1; color:#7a1f2b; font-weight:700}
+.map-complete{
+  margin-top:1.4rem; text-align:center; font-family:'Cinzel',serif; font-size:.8rem;
+  letter-spacing:.16em; text-transform:uppercase; color:#7a1f2b;
+  opacity:0; transform:translateY(6px); transition:.6s;
+}
+.map-complete.show{opacity:1; transform:none}
+
+/* ============================================================
+   HECHIZOS
+   ============================================================ */
+.spells{display:grid; grid-template-columns:repeat(3,1fr); gap:.85rem; width:100%; max-width:900px}
+.spell{perspective:1000px; height:170px; background:none; border:0; padding:0; cursor:pointer}
+.spell-inner{display:block; position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .75s cubic-bezier(.2,.8,.2,1)}
+.spell.flipped .spell-inner{transform:rotateY(180deg)}
+.face{
+  position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+  border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:1.1rem; text-align:center;
+}
+.front{
+  background:linear-gradient(160deg,#131c38,#090e20);
+  border:1px solid rgba(230,198,106,.35);
+  box-shadow:inset 0 0 46px rgba(80,60,160,.22), 0 14px 30px rgba(0,0,0,.4);
+}
+.front .glyph{font-size:2.3rem; line-height:1; color:var(--gold); text-shadow:0 0 18px rgba(230,198,106,.75); margin-bottom:.5rem}
+.front .name{font-family:'Cinzel',serif; color:var(--gold); letter-spacing:.1em; font-size:1rem}
+.front .incant{font-size:.66rem; letter-spacing:.22em; text-transform:uppercase; color:rgba(233,226,207,.45); margin-top:.35rem}
+.back{
+  transform:rotateY(180deg);
+  background:linear-gradient(160deg,#f8eed6,#e4cfa2); color:#3a2b16;
+  border:1px solid rgba(120,90,40,.4); box-shadow:0 14px 30px rgba(0,0,0,.35);
+  font-size:1.02rem; line-height:1.5;
+}
+.back .mark{font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.24em; text-transform:uppercase; color:#8a6a33; margin-bottom:.45rem}
+
+/* ============================================================
+   SALA DE LOS MENESTERES
+   ============================================================ */
+.room-panel{max-width:740px; width:100%}
+.wish-form{display:flex; gap:.6rem; margin-top:1.2rem; flex-wrap:wrap}
+.wish-form input{
+  flex:1; min-width:200px; padding:.85rem 1rem; border-radius:10px;
+  border:1px solid rgba(230,198,106,.4); background:rgba(8,11,24,.75);
+  color:var(--text); font-family:'Cormorant Garamond',serif; font-size:1.05rem;
+}
+.wish-form input:focus{outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(230,198,106,.18)}
+.wish-form input::placeholder{color:rgba(233,226,207,.4)}
+.wishes{display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1.3rem; justify-content:center}
+.wish{
+  background:rgba(230,198,106,.1); border:1px solid rgba(230,198,106,.35);
+  color:var(--gold); padding:.5rem .85rem; border-radius:999px;
+  font-size:.95rem; animation:pop .4s ease both;
+}
+.wish::before{content:"✦ "; opacity:.7}
+
+/* ============================================================
+   SIEMPRE · FINAL
+   ============================================================ */
+.always{display:flex; flex-direction:column; align-items:center; gap:.9rem; text-align:center; justify-content:center}
+.patronus{position:relative; width:190px; height:190px; display:grid; place-items:center; margin-bottom:-.4rem}
+.patronus .orb{
+  width:100px; height:100px; border-radius:50%;
+  background:radial-gradient(circle at 40% 34%, #ffffff 0%, #d9f3ff 22%, rgba(140,210,255,.55) 52%, rgba(90,170,255,.12) 70%, transparent 74%);
+  box-shadow:0 0 70px 24px rgba(140,210,255,.32), 0 0 140px 60px rgba(90,160,255,.12);
+  animation:pulse 4.5s ease-in-out infinite;
+}
+.patronus .ring{
+  position:absolute; inset:0; border-radius:50%;
+  border:1px solid rgba(180,230,255,.22);
+  animation:spin 22s linear infinite;
+}
+.patronus .ring.r2{inset:26px; border-style:dashed; animation-duration:16s; animation-direction:reverse}
+.patronus .spark{
+  position:absolute; width:5px; height:5px; border-radius:50%;
+  background:#dff5ff; box-shadow:0 0 12px #bfe9ff;
+  animation:floatSpark 6s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(1); opacity:.95}50%{transform:scale(1.08); opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes floatSpark{
+  0%{transform:translate(0,0) scale(.6); opacity:0}
+  30%{opacity:1}
+  100%{transform:translate(var(--dx,20px),var(--dy,-60px)) scale(0); opacity:0}
+}
+.always .lead{max-width:44ch}
+.always .final-actions{display:flex; gap:.7rem; flex-wrap:wrap; justify-content:center; margin-top:.6rem}
+.foot-note{font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.3em; text-transform:uppercase; color:rgba(233,226,207,.3); margin-top:.4rem}
+
+/* ============================================================
+   MODAL DE RECUERDOS
+   ============================================================ */
+.modal{
+  position:fixed; inset:0; z-index:50; display:flex; align-items:center; justify-content:center;
+  padding:1.2rem; background:rgba(3,4,10,.72); backdrop-filter:blur(6px);
+  opacity:0; transition:opacity .3s;
+}
+.modal[hidden]{display:none}
+.modal.show{opacity:1}
+.modal-card{
+  position:relative; max-width:560px; width:100%; border-radius:12px;
+  transform:translateY(14px) scale(.98); transition:transform .35s;
+  padding:clamp(1.6rem,4vw,2.4rem);
+}
+.modal.show .modal-card{transform:none}
+.modal-close{
+  position:absolute; top:.7rem; right:.8rem; width:34px; height:34px; border-radius:50%;
+  border:1px solid rgba(120,90,40,.4); background:rgba(255,255,255,.35);
+  color:#5e3d16; font-size:1.2rem; line-height:1; cursor:pointer; z-index:2;
+}
+.modal-close:hover{background:rgba(255,255,255,.6)}
+.modal-month{font-family:'Cinzel',serif; font-size:.66rem; letter-spacing:.3em; text-transform:uppercase; color:#8a6a33}
+.modal-title{font-family:'Cinzel',serif; font-size:clamp(1.3rem,3vw,1.7rem); color:#6b1f2b; margin:.5rem 0 .7rem; line-height:1.2}
+.modal-text{font-size:1.08rem; line-height:1.65; color:#33240f}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:680px){
+  .spells{grid-template-columns:repeat(2,1fr)}
+  .quiz-questions{grid-template-columns:1fr}
+}
+@media (max-width:900px){
+  .brand .txt{display:none}
+}
+@media (max-width:720px){
+  .brand .txt{display:none}
+  .topbar{gap:.5rem; padding:.55rem .7rem}
+  .chapters button{font-size:.6rem; padding:.4rem .45rem}
+  .trail{flex-direction:column; align-items:stretch; gap:.9rem; padding-top:.4rem}
+  .trail::before{left:27px; right:auto; top:1.4rem; bottom:1.4rem; border-top:0; border-left:3px dashed rgba(122,31,43,.32)}
+  .stop{flex-direction:row; justify-content:flex-start; gap:.9rem}
+  .stop .dot{width:46px; height:46px; flex:0 0 auto}
+  .stop .label{text-align:left; font-size:.62rem}
+}
+@media (max-width:520px){
+  .spells{grid-template-columns:1fr}
+  .spell{height:150px}
+  .letter-text{min-height:260px}
+  .letter-card .paper{min-height:0}
+  .navbar{gap:.7rem}
+  .dots{gap:.4rem}
+}
+@media (max-height:720px){
+  .wrap{gap:.8rem}
+  h2{font-size:clamp(1.35rem,3vw,1.8rem)}
+  .lead{font-size:.98rem}
+  .cover h1{font-size:clamp(1.7rem,4.6vw,2.8rem)}
+  .cover .wrap{gap:.75rem}
+  .envelope{width:min(280px,68vw)}
+  .spells{gap:.5rem}
+  .spell{height:138px}
+  .letter-card .paper{min-height:0}
+  .letter-text{min-height:0}
+  .patronus{width:130px;height:130px}
+  .always{gap:.55rem}
+  .hat-stage{gap:.7rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important}
+}
+</style>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<audio id="backgroundMusic" loop preload="none">
+  <source src="sonido.mp3" type="audio/mpeg">
+</audio>
+
+<header class="topbar">
+  <div class="brand"><span class="mark">✦</span><span class="txt">Seis meses · Un hogar</span></div>
+  <nav class="chapters" id="chapters" aria-label="Capítulos"></nav>
+  <button class="lumos music-toggle" id="musicToggle" type="button" aria-label="Activar música de fondo" aria-pressed="false" title="Activar música de fondo">♫</button>
+  <button class="lumos" id="lumosBtn" aria-pressed="false">Lumos</button>
+  <span class="music-status" id="musicStatus" role="status" aria-live="polite" hidden></span>
+</header>
+
+<main id="stage">
+
+  <!-- ============ 0 · PORTADA ============ -->
+  <section class="scene cover active" data-scene="0" id="portada">
+    <div class="wrap">
+      <p class="eyebrow">Un regalo para ti</p>
+      <h1>Seis meses,<br>un hogar</h1>
+      <p class="lead">Seis meses juntos y tres compartiendo nuestro hogar.</p>
+      <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Abrir la carta">
+        <div class="env-base"></div>
+        <div class="env-letter"><span class="wax-mini"></span><span>Para ti</span></div>
+        <div class="env-front"></div>
+        <div class="env-flap"></div>
+        <div class="seal"><span class="num">6</span><span class="word">meses</span></div>
+      </div>
+      <p class="hint">Toca el sello para abrir la carta</p>
+    </div>
+  </section>
+
+  <!-- ============ 1 · CARTA ============ -->
+  <section class="scene" data-scene="1" id="carta">
+    <div class="wrap">
+      <p class="eyebrow">Capítulo I · La carta</p>
+      <h2>Una carta de nuestro hogar</h2>
+      <div class="letter-card">
+        <div class="paper">
+          <div class="letter-head"><span class="line"></span>Correo de búho<span class="line"></span></div>
+          <div class="letter-text" id="letterText" aria-live="polite"></div>
+          <div class="signature" id="signature">Siempre,<br>Tu nombre</div>
+          <div class="letter-actions">
+            <button class="btn ghost" id="skipType" type="button">Mostrar todo</button>
+            <button class="btn" type="button" data-next>Continuar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2 · CUESTIONARIO ============ -->
+  <section class="scene" data-scene="2" id="cuestionario">
+    <div class="wrap">
+      <p class="eyebrow">Capítulo II · Tu personalidad</p>
+      <h2>¿A qué casa perteneces?</h2>
+      <p class="lead">Elige la respuesta que más se parece a ti. Tus elecciones ayudarán al Sombrero Seleccionador a encontrar tu casa; el resultado se revelará al tocarlo.</p>
+      <div class="paper quiz-panel">
+        <form class="quiz-form" id="quizForm">
+          <div class="quiz-questions" id="quizQuestions"></div>
+          <p class="quiz-feedback" id="quizFeedback" role="status" aria-live="polite"></p>
+          <div class="quiz-actions">
+            <button class="btn" type="submit">Completar cuestionario</button>
+            <button class="btn ghost" id="quizContinue" type="button" hidden>Consultar al sombrero</button>
+          </div>
+        </form>
+        <p class="quiz-result" id="quizResult" aria-live="polite" hidden></p>
+      </div>
+      <p class="hint">Responde las seis preguntas para continuar</p>
+    </div>
+  </section>
+
+  <!-- ============ 3 · SOMBRERO ============ -->
+  <section class="scene" data-scene="3" id="sombrero">
+    <div class="wrap">
+      <p class="eyebrow">Capítulo III · La elección</p>
+      <h2>El Sombrero Seleccionador</h2>
+      <p class="lead">Con tus respuestas, el Sombrero ya sabe dónde perteneces.</p>
+      <div class="hat-stage">
+        <button class="hat-button" type="button" id="hat" aria-label="Toca el sombrero seleccionador">
+          <img class="hat" src="sombrero.jpg" alt="" draggable="false">
+        </button>
+        <div class="bubble" id="hatBubble" aria-live="polite"></div>
+        <div class="crest" id="crest" aria-hidden="true">
+          <svg viewBox="0 0 200 230" role="img" aria-label="Escudo de la casa seleccionada">
+            <defs>
+              <linearGradient id="crestGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#243a6b"/>
+                <stop offset="1" stop-color="#0d1733"/>
+              </linearGradient>
+            </defs>
+            <path d="M100 8 L188 34 L188 120 C188 176 148 206 100 224 C52 206 12 176 12 120 L12 34 Z" fill="url(#crestGrad)" stroke="#c9a24a" stroke-width="4"/>
+            <path d="M100 22 L176 44 L176 118 C176 164 144 190 100 206 C56 190 24 164 24 118 L24 44 Z" fill="none" stroke="rgba(230,198,106,.35)" stroke-width="1.5"/>
+            <text class="crest-icon" id="crestIcon" x="100" y="112" text-anchor="middle" font-size="58">?</text>
+            <text class="crest-name" id="crestName" x="100" y="151" text-anchor="middle" font-size="15"></text>
+            <text class="crest-trait" id="crestTrait" x="100" y="174" text-anchor="middle" font-size="7"></text>
+          </svg>
+        </div>
+      </div>
+      <p class="hint">Toca el sombrero para confirmar tu selección</p>
+    </div>
+  </section>
+  <!-- ============ 4 · MAPA ============ -->
+  <section class="scene" data-scene="4" id="mapa">
+    <div class="wrap">
+      <p class="eyebrow">Capítulo IV · El viaje</p>
+      <h2>El Mapa de Nuestro Hogar</h2>
+      <p class="lead">Cada mes, un rincón de nuestra historia. Toca cada huella para revelarla.</p>
+      <div class="paper map-panel">
+        <div class="map-top">
+          <div>
+            <div class="eyebrow" style="color:#8a6a33">Mapa del merodeador</div>
+            <h3 style="color:#6b1f2b; margin-top:.35rem">Seis meses, seis rincones</h3>
+          </div>
+          <div style="display:flex; gap:.6rem; align-items:center; flex-wrap:wrap">
+            <span class="map-count" id="mapCount">0 / 6 revelados</span>
+            <button class="btn ghost" id="revelio" type="button" style="padding:.55rem 1rem; font-size:.62rem; border-color:rgba(122,31,43,.4); color:#6b1f2b">Revelio</button>
+          </div>
+        </div>
+        <img class="map-illustration" src="mapa.jpg" alt="Mapa del merodeador">
+        <div class="trail" id="trail"></div>
+        <p class="map-complete" id="mapComplete">✦ Mapa completo: seis meses, infinitos recuerdos ✦</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5 · HECHIZOS ============ -->
+  <section class="scene" data-scene="5" id="hechizos">
+    <div class="wrap">
+      <p class="eyebrow">Capítulo V · Nuestra magia</p>
+      <h2>Los hechizos que nos definen</h2>
+      <p class="lead">Toca cada carta para descubrir lo que significa para nosotros.</p>
+      <div class="spells" id="spells"></div>
+      <p class="hint">Toca un hechizo para girarlo</p>
+    </div>
+  </section>
+
+  <!-- ============ 6 · SALA ============ -->
+  <section class="scene" data-scene="6" id="sala">
+    <div class="wrap">
+      <p class="eyebrow">Capítulo VI · Lo que viene</p>
+      <h2>La Sala de los Menesteres</h2>
+      <p class="lead">Esta sala se transforma en lo que más necesitamos. ¿Qué queremos vivir juntos?</p>
+      <div class="paper room-panel">
+        <form class="wish-form" id="wishForm">
+          <input id="wishInput" type="text" maxlength="80" placeholder="Pide un deseo para nuestra próxima aventura…" aria-label="Escribe un deseo">
+          <button class="btn" type="submit">Pedirlo</button>
+        </form>
+        <div class="wishes" id="wishes"></div>
+      </div>
+      <p class="hint">Tus deseos se guardan en este dispositivo</p>
+    </div>
+  </section>
+
+  <!-- ============ 7 · SIEMPRE ============ -->
+  <section class="scene" data-scene="7" id="siempre">
+    <div class="wrap always">
+      <div class="patronus" aria-hidden="true">
+        <div class="ring"></div>
+        <div class="ring r2"></div>
+        <div class="orb"></div>
+        <span class="spark" style="left:38%; top:44%; --dx:34px; --dy:-74px"></span>
+        <span class="spark" style="left:58%; top:40%; --dx:-28px; --dy:-64px; animation-delay:1.2s"></span>
+        <span class="spark" style="left:50%; top:58%; --dx:42px; --dy:-52px; animation-delay:2.4s"></span>
+        <span class="spark" style="left:44%; top:52%; --dx:-38px; --dy:-80px; animation-delay:3.1s"></span>
+      </div>
+      <p class="eyebrow">Capítulo VII · Siempre</p>
+      <div class="script">Siempre.</div>
+      <p class="lead">Seis meses juntos, tres compartiendo hogar. Y todo lo que nos queda por escribir.</p>
+      <p class="lead" style="font-size:.95rem; letter-spacing:.06em; color:rgba(233,226,207,.55)">183 días, incontables risas, una sola persona.</p>
+      <div class="final-actions">
+        <button class="btn" type="button" id="restart">Volver al inicio</button>
+        <button class="btn ghost" type="button" data-go="1">Leer la carta otra vez</button>
+      </div>
+      <p class="foot-note">Hecho con ✦ para ti</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="navbar">
+  <button class="arrow" id="prevBtn" type="button" aria-label="Escena anterior">←</button>
+  <div class="dots" id="dots"></div>
+  <button class="arrow" id="nextBtn" type="button" aria-label="Escena siguiente">→</button>
+</footer>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal-card paper" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" type="button" aria-label="Cerrar">×</button>
+    <p class="modal-month" id="modalMonth"></p>
+    <h3 class="modal-title" id="modalTitle"></h3>
+    <p class="modal-text" id="modalText"></p>
+  </div>
+</div>
+<script>
+/* ============================================================
+   ✏️ EDITA AQUÍ TUS DATOS
+   ============================================================ */
+const CONFIG = {
+  signature: "Ángel Henríquez",
+
+  houses: {
+    gryffindor: {
+      name: "Gryffindor",
+      initial: "G",
+      colors: ["#9e1b32", "#e6c66a"],
+      trait: "VALENTÍA · VALOR",
+      quality: "valentía y determinación"
+    },
+    ravenclaw: {
+      name: "Ravenclaw",
+      initial: "R",
+      colors: ["#173a6a", "#c9a24a"],
+      trait: "INGENIO · SABIDURÍA",
+      quality: "curiosidad e ingenio"
+    },
+    hufflepuff: {
+      name: "Hufflepuff",
+      initial: "H",
+      colors: ["#d6aa28", "#29251d"],
+      trait: "LEALTAD · JUSTICIA",
+      quality: "lealtad y sentido de la justicia"
+    },
+    slytherin: {
+      name: "Slytherin",
+      initial: "S",
+      colors: ["#1f684b", "#c3d0c8"],
+      trait: "AMBICIÓN · ASTUCIA",
+      quality: "ambición y astucia"
+    }
+  },
+
+  quiz: [
+    {
+      question: "Si alguien que quieres está en problemas, ¿qué haces primero?",
+      options: [
+        { text: "Me planto a su lado y afronto el riesgo.", house: "gryffindor" },
+        { text: "Pienso con calma cómo resolverlo.", house: "ravenclaw" },
+        { text: "Me aseguro de que no tenga que pasar por eso a solas.", house: "hufflepuff" },
+        { text: "Busco una solución ingeniosa para cambiar la situación.", house: "slytherin" }
+      ]
+    },
+    {
+      question: "¿Qué cualidad valoras más en ti?",
+      options: [
+        { text: "Atreverme a hacer lo correcto.", house: "gryffindor" },
+        { text: "Mantener la mente abierta y aprender.", house: "ravenclaw" },
+        { text: "Ser alguien en quien los demás pueden confiar.", house: "hufflepuff" },
+        { text: "Tener determinación para alcanzar mis metas.", house: "slytherin" }
+      ]
+    },
+    {
+      question: "Te ofrecen un día libre en Hogwarts. ¿Cómo lo aprovechas?",
+      options: [
+        { text: "Me apunto a una aventura inesperada.", house: "gryffindor" },
+        { text: "Exploro la biblioteca y sigo una pregunta curiosa.", house: "ravenclaw" },
+        { text: "Lo paso con mis amigos, sin dejar a nadie fuera.", house: "hufflepuff" },
+        { text: "Practico algo nuevo que me acerque a un gran objetivo.", house: "slytherin" }
+      ]
+    },
+    {
+      question: "Cuando un plan se complica, normalmente…",
+      options: [
+        { text: "Tomo la iniciativa y doy el primer paso.", house: "gryffindor" },
+        { text: "Reviso los detalles y busco otra perspectiva.", house: "ravenclaw" },
+        { text: "Reúno al grupo y encontramos la salida juntos.", house: "hufflepuff" },
+        { text: "Me adapto rápido y encuentro una ventaja.", house: "slytherin" }
+      ]
+    },
+    {
+      question: "¿Qué te gustaría que tus amistades dijeran de ti?",
+      options: [
+        { text: "«Siempre da la cara por lo que cree».", house: "gryffindor" },
+        { text: "«Siempre tiene una idea que no se me había ocurrido».", house: "ravenclaw" },
+        { text: "«Siempre puedo contar con esa persona».", house: "hufflepuff" },
+        { text: "«Siempre encuentra la manera de salir adelante».", house: "slytherin" }
+      ]
+    },
+    {
+      question: "¿Qué objeto mágico escogerías para tu viaje?",
+      options: [
+        { text: "Una espada para proteger a quienes me acompañan.", house: "gryffindor" },
+        { text: "Un libro lleno de conocimientos por descubrir.", house: "ravenclaw" },
+        { text: "Una brújula para que nadie del grupo se pierda.", house: "hufflepuff" },
+        { text: "Un mapa secreto con rutas que solo yo conozco.", house: "slytherin" }
+      ]
+    }
+  ],
+
+  letter: [
+    "Para Angélica Jiménez, mi hogar:",
+    "Hace seis meses empezó nuestra historia y, hace tres, abrimos la puerta de esta pequeña casa para vivir juntos.",
+    "No hicieron falta castillos ni varitas para hacer magia: la hicimos con café a medias, con películas mal elegidas, con la manta en disputa y con cada mañana en la que elegimos quedarnos.",
+    "Gracias por los silencios cómodos, por las risas a deshoras y por hacer que cualquier rincón se sienta como casa.",
+    "Felices seis meses, mi amor. Que esto sea solo el primer libro.",
+    "Siempre,"
+  ].join("\n\n"),
+
+  memories: [
+    {
+      label: "Nosotros",
+      title: "El comienzo de nuestra historia",
+      text: "Hace seis meses comenzó esta aventura. Desde entonces, cada día juntos ha ido formando una historia que todavía nos queda por escribir."
+    },
+    {
+      label: "Nuestro hogar",
+      title: "Tres meses compartiendo casa",
+      text: "Hace tres meses empezamos a compartir un hogar. Qué bonito es construir, poco a poco, un lugar que también se siente nuestro."
+    },
+    {
+      label: "Días juntos",
+      title: "La magia de lo cotidiano",
+      text: "No hacen falta grandes planes: compartir el día, estar cerca y acompañarnos convierte los momentos sencillos en algo especial."
+    },
+    {
+      label: "Las sonrisas",
+      title: "Razones para sonreír",
+      text: "Entre tantas cosas que vivimos, siempre agradezco esos momentos que nos sacan una sonrisa y hacen más bonito el día."
+    },
+    {
+      label: "Aprender",
+      title: "Crecer de la mano",
+      text: "Compartir la vida también es aprender, tener paciencia y descubrir nuevas formas de cuidarnos y entendernos."
+    },
+    {
+      label: "Lo que viene",
+      title: "Nuestra próxima aventura",
+      text: "Estos seis meses son solo el comienzo. Me emociona todo lo que aún podemos compartir, imaginar y construir juntos."
+    }
+  ],
+  spells: [
+    { name: "Lumos", incant: "Luz", glyph: "✷", text: "Cuando todo se apaga, tú eres la luz que se queda encendida." },
+    { name: "Expecto Patronum", incant: "Recuerdo", glyph: "❈", text: "Mi recuerdo más feliz tiene tu risa de fondo." },
+    { name: "Accio", incant: "Llamada", glyph: "➹", text: "No importa dónde esté: siempre vuelvo a ti." },
+    { name: "Alohomora", incant: "Apertura", glyph: "⚿", text: "Con una sola mirada me abres por dentro." },
+    { name: "Reparo", incant: "Reparación", glyph: "✚", text: "Los días difíciles se arreglan mejor contigo." },
+    { name: "Wingardium Leviosa", incant: "Levedad", glyph: "❖", text: "Contigo hasta los días grises se sienten ligeros." }
+  ],
+
+  wishes: [
+    "Ver el mar juntos",
+    "Cocinar algo que no quememos",
+    "Un viaje con mochilas y sin planes",
+    "Más noches de película"
+  ]
+};
+/* ============================================================
+   NAVEGACIÓN ENTRE ESCENAS
+   ============================================================ */
+const chapters = [
+  { id: "portada", label: "Portada" },
+  { id: "carta", label: "La carta" },
+  { id: "cuestionario", label: "Cuestionario" },
+  { id: "sombrero", label: "El sombrero" },
+  { id: "mapa", label: "El mapa" },
+  { id: "hechizos", label: "Hechizos" },
+  { id: "sala", label: "La sala" },
+  { id: "siempre", label: "Siempre" }
+];
+
+const scenes = Array.from(document.querySelectorAll(".scene"));
+const chaptersNav = document.getElementById("chapters");
+const dotsEl = document.getElementById("dots");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let current = 0;
+let quizCompleted = false;
+let selectedHouse = null;
+
+chapters.forEach(function (c, i) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.textContent = c.label;
+  if (i === 0) b.classList.add("active");
+  b.addEventListener("click", function () { go(i); });
+  chaptersNav.appendChild(b);
+
+  const d = document.createElement("button");
+  d.type = "button";
+  d.setAttribute("aria-label", "Ir a " + c.label);
+  if (i === 0) d.classList.add("active");
+  d.addEventListener("click", function () { go(i); });
+  dotsEl.appendChild(d);
+});
+
+function go(i) {
+  i = Math.max(0, Math.min(scenes.length - 1, i));
+  if (chapters[i].id === "sombrero" && !quizCompleted) {
+    i = chapters.findIndex(function (c) { return c.id === "cuestionario"; });
+  }
+  current = i;
+  scenes.forEach(function (s, k) { s.classList.toggle("active", k === i); });
+  chaptersNav.querySelectorAll("button").forEach(function (b, k) { b.classList.toggle("active", k === i); });
+  dotsEl.querySelectorAll("button").forEach(function (b, k) { b.classList.toggle("active", k === i); });
+  prevBtn.disabled = i === 0;
+  nextBtn.disabled = i === scenes.length - 1;
+  scenes[i].scrollTop = 0;
+  if (i === 1) startLetter();
+  try { history.replaceState(null, "", "#" + chapters[i].id); } catch (e) {}
+}
+
+prevBtn.addEventListener("click", function () { go(current - 1); });
+nextBtn.addEventListener("click", function () { go(current + 1); });
+document.querySelectorAll("#stage [data-go]").forEach(function (b) {
+  b.addEventListener("click", function () { go(Number(b.getAttribute("data-go"))); });
+});
+/* ============================================================
+   SOBRE Y CARTA
+   ============================================================ */
+const envelope = document.getElementById("envelope");
+const letterText = document.getElementById("letterText");
+const skipBtn = document.getElementById("skipType");
+const signatureEl = document.getElementById("signature");
+let opened = false;
+let letterStarted = false;
+let letterDone = false;
+let typeTimer = null;
+
+signatureEl.innerHTML = "Siempre,<br>" + CONFIG.signature;
+
+function openEnvelope() {
+  if (opened) return;
+  opened = true;
+  startBackgroundMusic();
+  envelope.classList.add("open");
+  setTimeout(function () { go(1); }, reduced ? 250 : 1150);
+}
+envelope.addEventListener("click", openEnvelope);
+envelope.addEventListener("keydown", function (e) {
+  if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openEnvelope(); }
+});
+
+function startLetter() {
+  if (letterStarted) return;
+  letterStarted = true;
+  const text = CONFIG.letter;
+  if (reduced) {
+    letterText.textContent = text;
+    letterText.classList.add("done");
+    letterDone = true;
+    return;
+  }
+  let i = 0;
+  function step() {
+    i = Math.min(text.length, i + 3);
+    letterText.textContent = text.slice(0, i);
+    if (i < text.length) {
+      typeTimer = setTimeout(step, 14);
+    } else {
+      letterDone = true;
+      letterText.classList.add("done");
+    }
+  }
+  step();
+}
+
+function finishLetter() {
+  if (letterDone) return;
+  clearTimeout(typeTimer);
+  letterText.textContent = CONFIG.letter;
+  letterText.classList.add("done");
+  letterDone = true;
+}
+skipBtn.addEventListener("click", finishLetter);
+
+function resetLetter() {
+  clearTimeout(typeTimer);
+  letterStarted = false;
+  letterDone = false;
+  letterText.textContent = "";
+  letterText.classList.remove("done");
+}
+
+/* ============================================================
+   CUESTIONARIO DE PERSONALIDAD
+   ============================================================ */
+const quizForm = document.getElementById("quizForm");
+const quizQuestions = document.getElementById("quizQuestions");
+const quizFeedback = document.getElementById("quizFeedback");
+const quizResult = document.getElementById("quizResult");
+const quizContinue = document.getElementById("quizContinue");
+
+CONFIG.quiz.forEach(function (item, questionIndex) {
+  const fieldset = document.createElement("fieldset");
+  fieldset.className = "quiz-question";
+
+  const legend = document.createElement("legend");
+  legend.textContent = (questionIndex + 1) + ". " + item.question;
+  fieldset.appendChild(legend);
+
+  item.options.forEach(function (option, optionIndex) {
+    const label = document.createElement("label");
+    label.className = "quiz-option";
+
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = "question-" + questionIndex;
+    input.value = option.house;
+    input.required = true;
+    input.id = "answer-" + questionIndex + "-" + optionIndex;
+
+    const text = document.createElement("span");
+    text.textContent = option.text;
+
+    label.htmlFor = input.id;
+    label.appendChild(input);
+    label.appendChild(text);
+    fieldset.appendChild(label);
+  });
+
+  quizQuestions.appendChild(fieldset);
+});
+
+quizForm.addEventListener("invalid", function () {
+  quizFeedback.textContent = "Responde todas las preguntas antes de continuar.";
+}, true);
+
+quizForm.addEventListener("change", function () {
+  quizFeedback.textContent = "";
+  if (!quizCompleted) return;
+  quizCompleted = false;
+  selectedHouse = null;
+  quizResult.hidden = true;
+  quizContinue.hidden = true;
+  crest.classList.remove("show");
+  hatBubble.classList.remove("show");
+});
+
+quizForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const answers = CONFIG.quiz.map(function (_, questionIndex) {
+    const chosen = quizForm.querySelector('input[name="question-' + questionIndex + '"]:checked');
+    return chosen ? chosen.value : null;
+  });
+  const unanswered = answers.indexOf(null);
+  if (unanswered !== -1) {
+    quizFeedback.textContent = "Responde todas las preguntas antes de continuar.";
+    quizForm.querySelector('input[name="question-' + unanswered + '"]').focus();
+    return;
+  }
+
+  const scores = {};
+  Object.keys(CONFIG.houses).forEach(function (houseId) { scores[houseId] = 0; });
+  answers.forEach(function (houseId) { scores[houseId] += 1; });
+
+  const highestScore = Math.max.apply(null, Object.values(scores));
+  const leaders = Object.keys(scores).filter(function (houseId) {
+    return scores[houseId] === highestScore;
+  });
+  selectedHouse = answers.slice().reverse().find(function (houseId) {
+    return leaders.indexOf(houseId) !== -1;
+  });
+  quizCompleted = true;
+
+  quizFeedback.textContent = "";
+  quizResult.textContent = "Respuestas registradas. Toca «Consultar al sombrero» para conocer tu casa.";
+  quizResult.hidden = false;
+  quizContinue.hidden = false;
+});
+
+quizContinue.addEventListener("click", function () { go(3); });
+
+/* ============================================================
+   SOMBRERO SELECCIONADOR
+   ============================================================ */
+const hat = document.getElementById("hat");
+const hatBubble = document.getElementById("hatBubble");
+const crest = document.getElementById("crest");
+const crestIcon = document.getElementById("crestIcon");
+const crestName = document.getElementById("crestName");
+const crestTrait = document.getElementById("crestTrait");
+const crestGradientStops = document.querySelectorAll("#crestGrad stop");
+let sorting = false;
+let sortTimer = null;
+
+function sortHat() {
+  if (sorting) return;
+  if (!selectedHouse) {
+    hatBubble.textContent = "Completa primero el cuestionario para que pueda encontrar tu casa.";
+    hatBubble.classList.add("show");
+    return;
+  }
+  sorting = true;
+  hat.classList.add("thinking");
+  hatBubble.classList.remove("show");
+  hatBubble.textContent = "";
+  crest.classList.remove("show");
+  const house = CONFIG.houses[selectedHouse];
+  sortTimer = setTimeout(function () {
+    hat.classList.remove("thinking");
+    crestIcon.textContent = house.initial;
+    crestName.textContent = house.name;
+    crestTrait.textContent = house.trait;
+    crestGradientStops[0].setAttribute("stop-color", house.colors[0]);
+    crestGradientStops[1].setAttribute("stop-color", house.colors[1]);
+    crest.querySelector("svg").setAttribute("aria-label", "Escudo de " + house.name);
+    hatBubble.textContent = "Mmm… percibo en ti " + house.quality + ". ¡" + house.name.toUpperCase() + "!";
+    hatBubble.classList.add("show");
+    crest.classList.add("show");
+    sorting = false;
+    sortTimer = null;
+  }, reduced ? 250 : 1900);
+}
+hat.addEventListener("click", sortHat);
+/* ============================================================
+   MAPA · RECUERDOS
+   ============================================================ */
+const trail = document.getElementById("trail");
+const mapCount = document.getElementById("mapCount");
+const mapComplete = document.getElementById("mapComplete");
+const visited = new Set();
+
+CONFIG.memories.forEach(function (m, i) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "stop";
+  b.innerHTML = '<span class="dot">' + (i + 1) + '</span><span class="label">' + m.label + '</span>';
+  b.addEventListener("click", function () { openMemory(i, b); });
+  trail.appendChild(b);
+});
+
+function updateMap() {
+  mapCount.textContent = visited.size + " / " + CONFIG.memories.length + " revelados";
+  mapComplete.classList.toggle("show", visited.size === CONFIG.memories.length);
+}
+
+document.getElementById("revelio").addEventListener("click", function () {
+  trail.querySelectorAll(".stop").forEach(function (b) { b.classList.add("visited"); });
+  CONFIG.memories.forEach(function (_, i) { visited.add(i); });
+  updateMap();
+});
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+const modal = document.getElementById("modal");
+const modalMonth = document.getElementById("modalMonth");
+const modalTitle = document.getElementById("modalTitle");
+const modalText = document.getElementById("modalText");
+const modalClose = document.getElementById("modalClose");
+let lastFocus = null;
+
+function openMemory(i, btn) {
+  const m = CONFIG.memories[i];
+  lastFocus = document.activeElement;
+  modalMonth.textContent = "Mes " + (i + 1);
+  modalTitle.textContent = m.title;
+  modalText.textContent = m.text;
+  modal.hidden = false;
+  requestAnimationFrame(function () { modal.classList.add("show"); });
+  modalClose.focus();
+  if (btn) btn.classList.add("visited");
+  visited.add(i);
+  updateMap();
+}
+
+function closeModal() {
+  modal.classList.remove("show");
+  setTimeout(function () {
+    modal.hidden = true;
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }, reduced ? 0 : 280);
+}
+modalClose.addEventListener("click", closeModal);
+modal.addEventListener("click", function (e) { if (e.target === modal) closeModal(); });
+/* ============================================================
+   HECHIZOS
+   ============================================================ */
+const spellsEl = document.getElementById("spells");
+CONFIG.spells.forEach(function (s) {
+  const card = document.createElement("button");
+  card.type = "button";
+  card.className = "spell";
+  card.innerHTML =
+    '<span class="spell-inner">' +
+      '<span class="face front">' +
+        '<span class="glyph">' + s.glyph + '</span>' +
+        '<span class="name">' + s.name + '</span>' +
+        '<span class="incant">' + s.incant + '</span>' +
+      '</span>' +
+      '<span class="face back">' +
+        '<span class="mark">' + s.name + '</span>' + s.text +
+      '</span>' +
+    '</span>';
+  card.addEventListener("click", function () { card.classList.toggle("flipped"); });
+  spellsEl.appendChild(card);
+});
+
+/* ============================================================
+   SALA DE LOS MENESTERES · DESEOS
+   ============================================================ */
+const wishForm = document.getElementById("wishForm");
+const wishInput = document.getElementById("wishInput");
+const wishesEl = document.getElementById("wishes");
+let wishes = CONFIG.wishes.slice();
+
+try {
+  const saved = JSON.parse(localStorage.getItem("seisMesesWishes") || "null");
+  if (Array.isArray(saved) && saved.length) wishes = saved;
+} catch (e) {}
+
+function renderWishes() {
+  wishesEl.innerHTML = "";
+  wishes.forEach(function (w) {
+    const span = document.createElement("span");
+    span.className = "wish";
+    span.textContent = w;
+    wishesEl.appendChild(span);
+  });
+}
+renderWishes();
+
+wishForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const v = wishInput.value.trim();
+  if (!v) return;
+  wishes.push(v);
+  wishInput.value = "";
+  renderWishes();
+  try { localStorage.setItem("seisMesesWishes", JSON.stringify(wishes)); } catch (err) {}
+});
+
+/* ============================================================
+   LUMOS / NOX
+   ============================================================ */
+const lumosBtn = document.getElementById("lumosBtn");
+lumosBtn.addEventListener("click", function () {
+  const on = document.body.classList.toggle("lumos");
+  lumosBtn.textContent = on ? "Nox" : "Lumos";
+  lumosBtn.setAttribute("aria-pressed", String(on));
+});
+
+/* ============================================================
+   MÚSICA DE FONDO
+   ============================================================ */
+const backgroundMusic = document.getElementById("backgroundMusic");
+const musicToggle = document.getElementById("musicToggle");
+const musicStatus = document.getElementById("musicStatus");
+
+backgroundMusic.addEventListener("play", function () { updateMusicButton(true); });
+backgroundMusic.addEventListener("pause", function () { updateMusicButton(false); });
+
+function updateMusicButton(isPlaying) {
+  musicToggle.setAttribute("aria-pressed", String(isPlaying));
+  musicToggle.setAttribute("aria-label", isPlaying ? "Pausar música de fondo" : "Activar música de fondo");
+  musicToggle.title = isPlaying ? "Pausar música de fondo" : "Activar música de fondo";
+}
+
+function startBackgroundMusic() {
+  if (!backgroundMusic.paused) return;
+  musicStatus.hidden = true;
+  musicStatus.textContent = "";
+  backgroundMusic.play().then(function () {
+    updateMusicButton(true);
+  }).catch(function (error) {
+    if (error.name === "AbortError" && backgroundMusic.paused) return;
+    updateMusicButton(false);
+    musicStatus.textContent = "No se pudo reproducir la música. Comprueba que sonido.mp3 esté disponible.";
+    musicStatus.hidden = false;
+    console.error("No se pudo reproducir sonido.mp3:", error);
+  });
+}
+
+musicToggle.addEventListener("click", function () {
+  if (!backgroundMusic.paused) {
+    backgroundMusic.pause();
+    updateMusicButton(false);
+    return;
+  }
+  startBackgroundMusic();
+});
+
+/* ============================================================
+   TECLADO Y REINICIO
+   ============================================================ */
+document.addEventListener("keydown", function (e) {
+  if (!modal.hidden) {
+    if (e.key === "Escape") closeModal();
+    return;
+  }
+  if (e.target && e.target.matches && e.target.matches("input, textarea")) return;
+  if (e.key === "ArrowRight") go(current + 1);
+  else if (e.key === "ArrowLeft") go(current - 1);
+});
+
+document.getElementById("restart").addEventListener("click", function () {
+  resetLetter();
+  envelope.classList.remove("open");
+  opened = false;
+  clearTimeout(sortTimer);
+  sorting = false;
+  hat.classList.remove("thinking");
+  hatBubble.classList.remove("show");
+  hatBubble.textContent = "";
+  crest.classList.remove("show");
+  quizForm.reset();
+  quizFeedback.textContent = "";
+  quizResult.hidden = true;
+  quizContinue.hidden = true;
+  quizCompleted = false;
+  selectedHouse = null;
+  go(0);
+});
+/* ============================================================
+   CIELO ESTRELLADO
+   ============================================================ */
+(function () {
+  const canvas = document.getElementById("sky");
+  const ctx = canvas.getContext("2d");
+  const fine = window.matchMedia("(pointer: fine)").matches;
+  let W = 0, H = 0, DPR = 1;
+  let stars = [], dust = [], sparks = [];
+
+  function build() {
+    stars = [];
+    const count = Math.min(150, Math.round((W * H) / 12000));
+    for (let i = 0; i < count; i++) {
+      stars.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.3 + 0.3,
+        p: Math.random() * Math.PI * 2,
+        s: Math.random() * 0.0015 + 0.0004
+      });
+    }
+    dust = [];
+    for (let i = 0; i < 34; i++) {
+      dust.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.7 + 0.6,
+        vx: (Math.random() - 0.5) * 0.12,
+        vy: -(Math.random() * 0.18 + 0.05),
+        p: Math.random() * Math.PI * 2
+      });
+    }
+  }
+
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = Math.floor(W * DPR);
+    canvas.height = Math.floor(H * DPR);
+    canvas.style.width = W + "px";
+    canvas.style.height = H + "px";
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    build();
+  }
+
+  function draw(t) {
+    ctx.clearRect(0, 0, W, H);
+
+    for (let i = 0; i < stars.length; i++) {
+      const s = stars[i];
+      const a = 0.25 + 0.7 * (0.5 + 0.5 * Math.sin(t * s.s + s.p));
+      ctx.beginPath();
+      ctx.fillStyle = "rgba(220,230,255," + (a * 0.85).toFixed(3) + ")";
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    for (let i = 0; i < dust.length; i++) {
+      const d = dust[i];
+      d.x += d.vx;
+      d.y += d.vy;
+      if (d.y < -12) { d.y = H + 12; d.x = Math.random() * W; }
+      if (d.x < -12) d.x = W + 12;
+      if (d.x > W + 12) d.x = -12;
+      const a = 0.18 + 0.3 * (0.5 + 0.5 * Math.sin(t * 0.0015 + d.p));
+      ctx.beginPath();
+      ctx.fillStyle = "rgba(230,198,106," + a.toFixed(3) + ")";
+      ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    for (let i = sparks.length - 1; i >= 0; i--) {
+      const sp = sparks[i];
+      sp.x += sp.vx;
+      sp.y += sp.vy;
+      sp.vy += 0.02;
+      sp.life -= 0.022;
+      if (sp.life <= 0) { sparks.splice(i, 1); continue; }
+      ctx.beginPath();
+      ctx.fillStyle = "rgba(255,236,170," + sp.life.toFixed(3) + ")";
+      ctx.arc(sp.x, sp.y, Math.max(0.1, sp.r * sp.life), 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  let lastSpark = 0;
+  window.addEventListener("mousemove", function (e) {
+    if (!fine || reduced) return;
+    const now = performance.now();
+    if (now - lastSpark < 26) return;
+    lastSpark = now;
+    sparks.push({
+      x: e.clientX,
+      y: e.clientY,
+      vx: (Math.random() - 0.5) * 0.9,
+      vy: (Math.random() - 0.5) * 0.9 - 0.3,
+      r: Math.random() * 2 + 1,
+      life: 1
+    });
+    if (sparks.length > 60) sparks.shift();
+  });
+
+  window.addEventListener("resize", resize);
+  resize();
+  if (!reduced) requestAnimationFrame(draw);
+})();
+
+/* ============================================================
+   ARRANQUE
+   ============================================================ */
+(function () {
+  const startId = (location.hash || "").replace("#", "");
+  let idx = chapters.findIndex(function (c) { return c.id === startId; });
+  if (idx < 0) idx = 0;
+  go(idx);
+})();
+</script>
+</body>
+</html>
