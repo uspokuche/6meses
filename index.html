@@ -187,7 +187,7 @@ p{margin:0}
 .paper::before{
   content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
   opacity:.45; mix-blend-mode:multiply;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/ %3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
 }
 .paper > *{position:relative; z-index:1}
 @keyframes twinkle{0%,100%{opacity:.5; transform:scale(.9)}50%{opacity:1; transform:scale(1.15)}}
@@ -834,12 +834,12 @@ const CONFIG = {
   ],
 
   letter: [
-    "Para Angélica Jiménez, mi hogar:",
-    "Hace seis meses empezó nuestra historia y, hace tres, abrimos la puerta de esta pequeña casa para vivir juntos.",
-    "No hicieron falta castillos ni varitas para hacer magia: la hicimos con café a medias, con películas mal elegidas, con la manta en disputa y con cada mañana en la que elegimos quedarnos.",
-    "Gracias por los silencios cómodos, por las risas a deshoras y por hacer que cualquier rincón se sienta como casa.",
-    "Felices seis meses, mi amor. Que esto sea solo el primer libro.",
-    "Siempre,"
+    "Para Angélica Jiménez",
+    "Hace seis meses empezó nuestra historia de la nada un dia cualquiera llegaste para no irte mas y hace tres, abrimos la puerta de este pequeño cuarto para vivir juntos y decidimos formar muestro hogar. Sin dudas de ningún tipo",
+    "No hicieron falta castillos ni varitas para hacer magia: la hicimos con comidas a medias, con películas mal elegidas, con la sabana en disputa y con cada mañana en la que elegimos quedarnos.",
+    "Gracias por los silencios cómodos, por las risas a deshoras y por hacer que cualquier rincón se sienta como casa. Aunque aveces creas que no sou feliz pues si lo soy",
+    "Felices seis meses, mi amor. Que esto sea solo el primer libro de muchos",
+    "Siempre"
   ].join("\n\n"),
 
   memories: [
@@ -998,6 +998,7 @@ function startLetter() {
       letterText.classList.add("done");
     }
   }
+
   step();
 }
 
